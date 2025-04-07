@@ -1,7 +1,7 @@
 .DS_Store
-exercises.csv
-health_tracker.xlsx
-muscles.csv
+/data/exercises.csv
+/data/muscles.csv
+/data/workout_tracker.csv
+/data/health_tracker.xlsx
 /pyvenv
 workout_summary.twb
-workout_tracker.csv
