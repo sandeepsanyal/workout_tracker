@@ -1,2 +1,3 @@
 # workout_tracker
-My workout tracker to track my progress and motivate me to do better.
+Created a small program to add workouts so that I can track them.
+Hoping to make this into a small app that will even show interactive visuals for me to track my progress.
