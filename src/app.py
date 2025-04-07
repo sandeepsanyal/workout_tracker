@@ -11,8 +11,8 @@ py_env = split_python_path[len(split_python_path)-2]
 
 app = Flask(
     __name__,
-    template_folder=home_folder + r'/templates',
-    static_folder=home_folder + r'/static'
+    template_folder=home_folder + r'/src/templates',
+    static_folder=home_folder + r'/src/static'
 )
 
 def get_db_connection():
