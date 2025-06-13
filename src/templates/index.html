@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Workout App</title>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <!-- Include the external CSS file -->
     <link rel="stylesheet" href="/static/styles.css">
 </head>
@@ -22,15 +21,20 @@
         <div class="row">
             <label for="bodyArea">Body Area:</label>
             <select id="bodyArea" name="bodyArea"></select>
-        <label for="subArea">Sub-area:</label>
+        </div>
+        <div class="row">
+            <label for="subArea">Sub-area:</label>
             <select id="subArea" name="subArea"></select>
-        <label for="exercise">Exercise:</label>
+        </div>
+        <div class="row">
+            <label for="exercise">Exercise:</label>
             <select id="exercise" name="exercise"></select>
         </div>
+
         <!-- Weight and Reps Fields -->
         <div class="row">
             <label for="weight">Weight (kg):</label>
-            <input type="number" id="weight" name="weight" required min="0">
+            <input type="number" id="weight" name="weight" required step="any">
 
             <label for="reps">Reps:</label>
             <input type="number" id="reps" name="reps" required min="0">
@@ -41,6 +45,7 @@
     </form>
 
     <!-- Include the external JavaScript file -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="/static/script.js"></script>
 </body>
 </html>

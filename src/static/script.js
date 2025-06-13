@@ -1,5 +1,32 @@
 $(document).ready(function() {
-    // Fetch body areas on page load
+    document.getElementById('workoutForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        const formData = new FormData(this);
+        const weight = parseFloat(formData.get('weight'));
+        if (!formData.get('date') || !formData.get('bodyArea') || !formData.get('subArea') ||
+            !formData.get('exercise') || isNaN(weight) || !formData.get('reps')) {
+            alert('All fields are required.');
+            return;
+        }
+
+        formData.set('weight', weight); // Ensure weight is a number
+
+        fetch('/submit_workout', {
+            method: 'POST',
+            body: formData,
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Workout submitted successfully!');
+                this.reset();
+            } else {
+                alert('Failed to submit workout.');
+            }
+        });
+    });
+
     fetchBodyAreas();
 
     $('#bodyArea').change(function() {
@@ -19,25 +46,6 @@ $(document).ready(function() {
         } else {
             $('#exercise').empty().append('<option value="">Select Exercise</option>');
         }
-    });
-
-    document.getElementById('workoutForm').addEventListener('submit', function(event) {
-        event.preventDefault();
-
-        const formData = new FormData(this);
-        fetch('/submit_workout', {
-            method: 'POST',
-            body: formData,
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                alert('Workout submitted successfully!');
-                this.reset();
-            } else {
-                alert('Failed to submit workout.');
-            }
-        });
     });
 });
 

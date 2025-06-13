@@ -44,6 +44,8 @@ def get_body_areas():
 @app.route('/get_sub_areas', methods=['GET'])
 def get_sub_areas():
     body_area = request.args.get('body_area')
+    if not body_area:
+        return jsonify({'error': 'Body area is required'}), 400
     conn = get_db_connection()
     cur = conn.cursor()
     cur.execute('SELECT DISTINCT "Sub-area" FROM muscles WHERE "Body Area" = ?', (body_area,))
@@ -54,6 +56,8 @@ def get_sub_areas():
 @app.route('/get_exercises', methods=['GET'])
 def get_exercises():
     sub_area = request.args.get('sub_area')
+    if not sub_area:
+        return jsonify({'error': 'Sub area is required'}), 400
     conn = get_db_connection()
     cur = conn.cursor()
     query = """
@@ -75,13 +79,23 @@ def submit_workout():
     body_area = data.get('bodyArea')
     sub_area = data.get('subArea')
     exercise = data.get('exercise')
-    exercise_id = get_exercise_id(exercise)
-    weight = data.get('weight')
+    weight_str = data.get('weight')  # Get weight as string
     reps = data.get('reps')
 
     # Validate input (basic example)
-    if not all([date, body_area, sub_area, exercise, weight, reps]):
+    if not all([date, body_area, sub_area, exercise, weight_str, reps]):
         return jsonify({'success': False, 'message': 'All fields are required'}), 400
+
+    try:
+        weight = float(weight_str)  # Convert weight to float
+    except ValueError:
+        return jsonify({'success': False, 'message': 'Weight must be a number'}), 400
+
+    try:
+        exercise_id = get_exercise_id(exercise)
+    except Exception as e:
+        print(e)  # Log error
+        return jsonify({'success': False, 'message': str(e)}), 500
 
     conn = get_db_connection()
     cur = conn.cursor()
@@ -103,4 +117,4 @@ def submit_workout():
         conn.close()
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host="0.0.0.0", port=1094, debug=True)
